@@ -41,3 +41,5 @@ Run the game by executing the main script via streamlit:
 ```bash
 streamlit run ai-rpg-text.py
 ```
+
+![screenshot](./screenshot.png)
