@@ -15,12 +15,10 @@ if "conversation_chain" not in st.session_state:
 
 st.title('AI RPG Text Adventure')
 
-initial_inventory = st.text_input("Initial inventory: ", initial_inventory_advanced)
+initial_inventory = st.text_area("Initial inventory: ", initial_inventory_advanced)
 
 if initial_inventory is None:
     initial_inventory = "sword, torch"
-user_input = st.text_input("Player Input: ", "start in a city")
-st.write("Press Play Action to perform action")
 
 if st.session_state["conversation_chain"] is None:
     print("Initializing conversation chain...")
@@ -38,14 +36,19 @@ else:
     print("Reusing conversation chain...")
     conversation = st.session_state["conversation_chain"]
 
-if st.button("Play Action", type="primary"):
+user_input = st.chat_input("Input your action or dialogue",)
+
+if user_input:
     # main game loop for text adventure
-    response = conversation.predict(input=user_input)
-    st.write(response)
+    with st.spinner("Generating response..."):
+        response = conversation.predict(input=user_input)
+        with st.chat_message("assistant"):
+            st.write(response)
 
-if st.button("Save Game"):
-    pickle.dump(conversation, open("conversation.pkl", "wb"))
 
-if st.button("Load Game"):
-    conversation = pickle.load(open("conversation.pkl", "rb"))
-    st.session_state["conversation_chain"] = conversation
+# if st.button("Save Game"):
+#     pickle.dump(conversation, open("conversation.pkl", "wb"))
+
+# if st.button("Load Game"):
+#     conversation = pickle.load(open("conversation.pkl", "rb"))
+#     st.session_state["conversation_chain"] = conversation
