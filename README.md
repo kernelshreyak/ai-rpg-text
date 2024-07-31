@@ -37,10 +37,3 @@ Run the game by executing the main script via streamlit:
 ```bash
 streamlit run ai-rpg-text.py
 ```
-
-
-## Game Loop
-
- - User Input: Type your commands to interact with the game: performing navigation and combat actions.
- - Exit: Type exit to end the game.
-    
