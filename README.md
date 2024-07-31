@@ -4,17 +4,16 @@ This project is a text-based RPG adventure game driven by an AI Dungeon Master (
 
 ## Features
 
-- AI-driven Dungeon Master to generate and control the game world.
-- Memory support to maintain conversation context throughout the game session.
+- AI-driven Dungeon Master to generate and control the game world. Uses the latest gpt-4o-mini for fast response
+- Conversational Memory support to maintain conversation context throughout the game session.
 - Simplified DnD 5e mechanics for ease of play.
+- Easy to use Web UI created using Streamlit
+- Modify initial inventory, starting scenarios etc using prompts
+- Configureable prompt templates to modify pre-defined game mechanics using text
 
-## Requirements
-
-- Python 3.7+
-- `langchain_openai`
-- `langchain_core`
-- `langchain`
-- `dotenv`
+## Planned features
+ - Save and Load a game
+ - Support for other LLMs
 
 ## Installation
 
@@ -33,10 +32,10 @@ This project is a text-based RPG adventure game driven by an AI Dungeon Master (
 
 
 ## Usage
-Run the game by executing the main.py script:
+Run the game by executing the main script via streamlit:
 
 ```bash
-python main.py
+streamlit run ai-rpg-text.py
 ```
 
 

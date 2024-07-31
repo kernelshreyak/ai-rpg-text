@@ -42,4 +42,10 @@ if st.button("Play Action", type="primary"):
     # main game loop for text adventure
     response = conversation.predict(input=user_input)
     st.write(response)
-    
+
+if st.button("Save Game"):
+    pickle.dump(conversation, open("conversation.pkl", "wb"))
+
+if st.button("Load Game"):
+    conversation = pickle.load(open("conversation.pkl", "rb"))
+    st.session_state["conversation_chain"] = conversation
