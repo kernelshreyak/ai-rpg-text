@@ -28,9 +28,13 @@ This project is a text-based RPG adventure game driven by an AI Dungeon Master (
     source .venv/bin/activate
     ```
 3. **Install the dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
 4. **Set up environment variables:**
-
-
+    ```bash
+    export OPENAI_API_KEY=<your-openai-key>
+    ```
 ## Usage
 Run the game by executing the main script via streamlit:
 
