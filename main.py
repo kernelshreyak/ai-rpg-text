@@ -12,7 +12,7 @@ llm = ChatOpenAI()
 output_parser = StrOutputParser()
 
 
-PROMPT = PromptTemplate(input_variables=["history", "input"], template=starting_template)
+PROMPT = PromptTemplate(input_variables=["history", "input"], template=starting_template.replace("{player_inventory_initial}", "torch, sword with 100 damage,healing potion x 3, 500 gold"))
 conversation = ConversationChain(
     prompt=PROMPT,
     llm=llm,
@@ -24,6 +24,7 @@ conversation = ConversationChain(
 while True:
     user_input = input(">>> ")
     if user_input == "exit":
+        print
         break
     response = conversation.predict(input=user_input)
     print(response)
