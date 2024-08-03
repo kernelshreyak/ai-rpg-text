@@ -1,4 +1,6 @@
 from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
+
 from langchain_core.prompts.prompt import PromptTemplate
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory, ChatMessageHistory
@@ -22,7 +24,8 @@ if initial_inventory is None:
     initial_inventory = "sword, torch"
 
 def create_conversation_chain(initial_inventory):
-    llm = ChatOpenAI(model="gpt-4o-mini")
+    # llm = ChatOpenAI(model="gpt-4o-mini")
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
     PROMPT = PromptTemplate(input_variables=["history", "input"], template=basic_rpg_random.replace("{player_inventory_initial}", initial_inventory))
     memory = ConversationBufferMemory(human_prefix="Player", ai_prefix="Dungeon Master")
     return ConversationChain(
