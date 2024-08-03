@@ -4,8 +4,8 @@ from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory, ChatMessageHistory
 from langchain.schema import HumanMessage, AIMessage
 from dotenv import load_dotenv
-from ai_rpg_core.prompt_templates import starting_template
-from ai_rpg_core.inventory import initial_inventory_basic, initial_inventory_advanced
+from ai_rpg_core.prompt_templates import basic_rpg_random
+from ai_rpg_core.inventory import initial_inventory_basic, initial_inventory_advanced,initial_inventory_mage_advanced
 import streamlit as st
 import json
 
@@ -16,14 +16,14 @@ if "conversation_chain" not in st.session_state:
 
 st.title('AI RPG Text Adventure')
 
-initial_inventory = st.text_area("Initial inventory: ", initial_inventory_advanced)
+initial_inventory = st.text_area("Initial inventory: ", initial_inventory_mage_advanced,disabled=True)
 
 if initial_inventory is None:
     initial_inventory = "sword, torch"
 
 def create_conversation_chain(initial_inventory):
     llm = ChatOpenAI(model="gpt-4o-mini")
-    PROMPT = PromptTemplate(input_variables=["history", "input"], template=starting_template.replace("{player_inventory_initial}", initial_inventory))
+    PROMPT = PromptTemplate(input_variables=["history", "input"], template=basic_rpg_random.replace("{player_inventory_initial}", initial_inventory))
     memory = ConversationBufferMemory(human_prefix="Player", ai_prefix="Dungeon Master")
     return ConversationChain(
         prompt=PROMPT,

@@ -2,3 +2,4 @@
 .env
 ai_rpg_core/__pycache__/
 conversation_memory.json
+saved_games

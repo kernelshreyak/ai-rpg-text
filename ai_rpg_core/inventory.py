@@ -1,2 +1,3 @@
 initial_inventory_basic = "torch, sword with 100 damage,healing potion x 3, 500 gold"
 initial_inventory_advanced = "torch, sword with 500 damage,healing potion x 3, 500 gold,fire spell(600 dps),lightning spell(1000 dps), turn undead, invisibility cloak"
+initial_inventory_mage_advanced = "torch, sword with 500 damage,healing potion x 3, 500 gold,fire spell(600 dps),lightning spell(1000 dps), turn undead, invisibility cloak, antigravity(40m radius), unholy aura(can be activated any time),mind control, summon undead(zombie or ghoul)"
