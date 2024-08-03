@@ -18,14 +18,21 @@ if "conversation_chain" not in st.session_state:
 
 st.title('AI RPG Text Adventure')
 
+llm_chosen = st.radio("LLM", ("GPT-4-o-mini", "Gemini-1.5-flash"), key="llm_chosen")
+print("llm_chosen:",llm_chosen)
 initial_inventory = st.text_area("Initial inventory: ", initial_inventory_mage_advanced,disabled=True)
 
 if initial_inventory is None:
     initial_inventory = "sword, torch"
 
 def create_conversation_chain(initial_inventory):
-    # llm = ChatOpenAI(model="gpt-4o-mini")
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
+    if llm_chosen == "GPT-4-o-mini":
+        # good for detailed responses (this is the default LLM to be usd in the project)
+        llm = ChatOpenAI(model="gpt-4o-mini") 
+    elif llm_chosen == "Gemini-1.5-flash":
+        # good for short and quick responses with large context window
+        llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash") 
+   
     PROMPT = PromptTemplate(input_variables=["history", "input"], template=basic_rpg_random.replace("{player_inventory_initial}", initial_inventory))
     memory = ConversationBufferMemory(human_prefix="Player", ai_prefix="Dungeon Master")
     return ConversationChain(
