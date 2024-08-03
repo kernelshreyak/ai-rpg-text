@@ -32,9 +32,10 @@ This project is a text-based RPG adventure game driven by an AI Dungeon Master (
     ```bash
     pip install -r requirements.txt
     ```
-4. **Set up environment variables:**
+4. **Set up environment variables (for OpenAI or Google Gemini models):**
     ```bash
     export OPENAI_API_KEY="<your-openai-key>"
+    export GOOGLE_API_KEY="<your-google-genai-key>"
     ```
 ## Usage
 Run the game by executing the main script via streamlit:
