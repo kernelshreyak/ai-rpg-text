@@ -1,18 +1,19 @@
 # AI RPG Text Adventure
 
-This project is a text-based RPG adventure game driven by an AI Dungeon Master (DM). The DM generates a solo RPG adventure based on Dungeons & Dragons (DnD) 5e rules, but with simplified mechanics. The player interacts with the game by typing commands, and the AI responds by advancing the story.
+This project is a text-based RPG adventure game driven by an AI Dungeon Master (DM). The DM generates a solo RPG adventure inspired from Dungeons & Dragons (DnD) rules, but with simplified mechanics. The player interacts with the game by typing commands, and the AI responds by advancing the story.
 
 ## Features
 
 - AI-driven Dungeon Master to generate and control the game world. Uses the latest gpt-4o-mini for fast response
 - Conversational Memory support to maintain conversation context throughout the game session.
-- Simplified DnD 5e mechanics for ease of play.
+- Simplified DnD mechanics for ease of play.
 - Easy to use Web UI created using Streamlit
 - Modify initial inventory, starting scenarios etc using prompts
 - Configureable prompt templates to modify pre-defined game mechanics using text
+- Save to and load game session using JSON
 
 ## Planned features
- - Save and Load a game
+ - Better object-oriented control of game mechanics
  - Support for other LLMs
 
 ## Installation
@@ -33,7 +34,7 @@ This project is a text-based RPG adventure game driven by an AI Dungeon Master (
     ```
 4. **Set up environment variables:**
     ```bash
-    export OPENAI_API_KEY=<your-openai-key>
+    export OPENAI_API_KEY="<your-openai-key>"
     ```
 ## Usage
 Run the game by executing the main script via streamlit:
