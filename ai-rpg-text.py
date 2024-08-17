@@ -6,8 +6,9 @@ from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory, ChatMessageHistory
 from langchain.schema import HumanMessage, AIMessage
 from dotenv import load_dotenv
-from ai_rpg_core.prompt_templates import basic_rpg_random
-from ai_rpg_core.inventory import initial_inventory_basic, initial_inventory_advanced,initial_inventory_mage_advanced
+from ai_rpg_core.game_types import RPGBasicRandom,RPGFixedCampaign
+from ai_rpg_core.character_backgrounds import *
+from ai_rpg_core.inventory import *
 import streamlit as st
 import json
 
@@ -18,22 +19,22 @@ if "conversation_chain" not in st.session_state:
 
 st.title('AI RPG Text Adventure')
 
+# create a game based on a template
+# game = RPGBasicRandom(inventory=initial_inventory_mage_advanced,is_fixed=True)
+game = RPGFixedCampaign(inventory=king_alof_inventory,backstory=king_alof_backstory)
+
 llm_chosen = st.radio("LLM", ("GPT-4-o-mini", "Gemini-1.5-flash"), key="llm_chosen")
-print("llm_chosen:",llm_chosen)
-initial_inventory = st.text_area("Initial inventory: ", initial_inventory_mage_advanced,disabled=True)
+st.text_area("Initial inventory: ", game.inventory,disabled=True)
 
-if initial_inventory is None:
-    initial_inventory = "sword, torch"
-
-def create_conversation_chain(initial_inventory):
+def create_conversation_chain():
     if llm_chosen == "GPT-4-o-mini":
         # good for detailed responses (this is the default LLM to be usd in the project)
         llm = ChatOpenAI(model="gpt-4o-mini") 
     elif llm_chosen == "Gemini-1.5-flash":
         # good for short and quick responses with large context window
         llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash") 
-   
-    PROMPT = PromptTemplate(input_variables=["history", "input"], template=basic_rpg_random.replace("{player_inventory_initial}", initial_inventory))
+
+    PROMPT = PromptTemplate(input_variables=["history", "input"], template=game.template)
     memory = ConversationBufferMemory(human_prefix="Player", ai_prefix="Dungeon Master")
     return ConversationChain(
         prompt=PROMPT,
@@ -44,7 +45,7 @@ def create_conversation_chain(initial_inventory):
 
 if st.session_state["conversation_chain"] is None:
     print("Initializing conversation chain...")
-    conversation = create_conversation_chain(initial_inventory)
+    conversation = create_conversation_chain()
     st.session_state["conversation_chain"] = conversation
     print("Conversation chain initialized.")
 else:
@@ -65,7 +66,7 @@ def save_conversation(conversation, filename):
     with open(f'{filename}_memory.json', 'w') as f:
         json.dump(serializable_memory, f)
 
-def load_conversation(filename, initial_inventory):
+def load_conversation(filename):
     # Load memory contents
     with open(f'{filename}_memory.json', 'r') as f:
         serializable_memory = json.load(f)
@@ -78,7 +79,7 @@ def load_conversation(filename, initial_inventory):
             memory_contents.append(AIMessage(content=msg["content"]))
 
     # Recreate the conversation chain and memory
-    conversation = create_conversation_chain(initial_inventory)
+    conversation = create_conversation_chain()
     conversation.memory.chat_memory.messages = memory_contents
 
     return conversation
@@ -89,9 +90,11 @@ if st.button("Save Game"):
     st.success("Game saved successfully!")
 
 if st.button("Load Game"):
-    conversation = load_conversation("conversation", initial_inventory)
+    conversation = load_conversation("conversation")
     st.session_state["conversation_chain"] = conversation
     st.success("Game loaded successfully!")
+
+# st.markdown("Welcome to the adventure: " + game.template)
 
 user_input = st.chat_input("Input your action or dialogue")
 if user_input:
