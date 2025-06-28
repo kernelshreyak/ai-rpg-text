@@ -19,3 +19,7 @@ class RPGFixedCampaign(GameTemplate):
         self.template += RPG_OPEN_WORLD
         self.template += RPG_GUARDRAILS
         self.template += RPG_END
+
+class ActionAdventure(GameTemplate):
+    def __init__(self,inventory:str):
+        super().__init__(inventory=inventory)

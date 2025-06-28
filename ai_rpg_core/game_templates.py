@@ -45,6 +45,10 @@ DM:
 """
 
 
+ACTION_ADVENTURE="""
+
+"""
+
 
 
 class GameTemplate:
